@@ -1,11 +1,14 @@
-import unittest
+from django.test import TestCase
 from router import Parser
 
-class TestURLConfigMethods(unittest.TestCase):
+class TestApp(TestCase):
 
-    def test_create_basic_url(self):
-        urls = Parser.to_urls('test_router.cfg')
-        self.assertIsNotNone(urls)
+    def test_simple_view(self):
+        resp = self.client.get('/simple_view')
+        self.assertEqual(200, resp.status_code)
 
-if __name__ == '__main__':
-    unittest.main()
+    def test_view_with_param(self):
+        resp = self.client.get('/view_with_param/thisIsAParam/')
+        self.assertEqual(200, resp.status_code)
+        self.assertContains(resp, 'thisIsAParam')
+
