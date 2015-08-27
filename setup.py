@@ -28,5 +28,5 @@ setup(
                     'django>1.7.9',
                     'pyparsing',
                 ],
-        packages=find_packages()
+        packages=find_packages(exclude=['test_app', 'test_settings'])
 )

@@ -30,5 +30,5 @@ class Parser(object):
                     pattern = values.get('pattern')
                     view = values.get('view')
                     if view and pattern:
-                        urlpatterns += patterns('', url(pattern, view))
+                        urlpatterns += patterns('', url(pattern, view, name=name))
         return urlpatterns
