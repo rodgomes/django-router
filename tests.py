@@ -12,3 +12,8 @@ class TestApp(TestCase):
         self.assertEqual(200, resp.status_code)
         self.assertContains(resp, 'thisIsAParam')
 
+    def test_view_with_default_param(self):
+        resp = self.client.get('/view_with_default_param/')
+        self.assertEqual(200, resp.status_code)
+        self.assertContains(resp, '123')
+

@@ -2,7 +2,7 @@ from pyparsing import Word, alphanums, alphas, Optional, Literal
 from django.conf import settings
 from django.conf.urls import patterns, url
 
-name = Word(alphanums+"_:-").setName('name')
+name = Word(alphanums+"_:-")
 view = Word(alphanums + "._()")
 url_pattern = Word(alphanums+"/$.*?^<>()_%+")
 key = Word( alphanums + "._")
@@ -29,6 +29,13 @@ class Parser(object):
                     name = values.get('name')
                     pattern = values.get('pattern')
                     view = values.get('view')
+                    key_value = values.get('key_value')
                     if view and pattern:
-                        urlpatterns += patterns('', url(pattern, view, name=name))
+                        if key_value:
+                            urlpatterns += patterns('', url(pattern, view,{key_value[0]:key_value[2]}, name=name))
+                        else:
+                            urlpatterns += patterns('', url(pattern, view, name=name))
+
+                    else:
+                        raise ValueError('A url should have at least a view and a pattern')
         return urlpatterns
